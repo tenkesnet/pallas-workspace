@@ -1,0 +1,1 @@
+insert into iskola.iskolas (Name,City) values ('Róbert','Budapest');

@@ -1,0 +1,184 @@
+body {
+	margin: 0;
+	padding: 0;
+	color: #000000;
+	background-color: #E5E5E5;
+	background-image: url(pictures/body-bg.jpg);
+	background-repeat: no-repeat;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+a:link {
+	color:#005CA1;
+	text-decoration: none; /* unless you style your links to look extremely unique, it's best to provide underlines for quick visual identification */
+}
+a:visited {
+	color: #005CA1;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+	color: #DA251C;
+}
+a:active {
+	text-decoration: none;
+	color: #DA251C;
+}
+
+.container {
+	width: 1100px;
+	max-width: auto;/* a max-width may be desirable to keep this layout from getting too wide on a large monitor. This keeps line length more readable. IE6 does not respect this declaration. */
+	min-width: auto; /* the auto value on the sides, coupled with the width, centers the layout. It is not needed if you set the .container's width to 100%. */
+	background-color: #FFFFFF;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
+}
+
+.header {
+	width: 1100px;
+	max-width: auto;/* a max-width may be desirable to keep this layout from getting too wide on a large monitor. This keeps line length more readable. IE6 does not respect this declaration. */
+	min-width: auto; /* the auto value on the sides, coupled with the width, centers the layout. It is not needed if you set the .container's width to 100%. */
+	background-color: #FFFFFF;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: auto;
+}
+
+.sidebar1 {
+	float: right;
+	width: 260px;
+	padding-bottom: 12px;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+.content {
+	width: 1050px;
+	background-color: #FFFFFF;
+	float: left;
+	padding-top: 5px;
+	padding-right: 0px;
+	padding-bottom: 5px;
+	padding-left: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-left: 10px;
+}
+
+.footer {
+	clear: both; /* this clear property forces the .container to understand where the columns end and contain them */
+	background: #666;
+	color: #FFF;
+	width: 1100px;
+	padding-top: 0px;
+	padding-right: 0;
+	padding-bottom: 0px;
+	padding-left: 0;
+	
+}
+
+td {
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	vertical-align: top;
+	font-size: 14px;
+	font-style: normal;
+}
+
+.tdfooter {
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+	vertical-align: middle;
+	font-size: 14px;
+	font-style: normal;
+}
+
+th 	{ 
+	background-color: #005CA1; 
+	color: #FFF; 
+	text-align:left;
+	vertical-align: middle;
+	font-size: 15px; 
+	font-weight: bold; 
+	font-family: "Arial" 
+}
+
+.fixmezo {
+	font: 11px Arial, Helvetica, sans-serif;
+	color: #000;
+	background-color: #CECECE;
+}
+
+.hirek_cim {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+}
+.hirek_datum{
+	color: #999;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+}
+.hirek_alcim {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	
+}
+.hibauzenet {
+	color: red !important;	
+}
+.container .sidebar1 {
+	font-size: 14px;
+}
+.sidebar_text {
+	font-size: 14px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.cimsor{
+	font:Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	text-shadow:#666;
+	color:#005CA1;
+}
+.button_style {
+	background-color:#E5E5E5;
+	color:#000000;
+	font-family:"Arial";
+	font-weight: normal;
+	border:hidden;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+textarea {
+   	color: #000000; 
+	font-size: 14px; 
+	font-family: "Arial" ;
+ 	overflow: hidden
+}
+.tdmagunkrol {
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	vertical-align:top !important;
+	font-size: 14px;
+	font-style: normal;
+}
+#footer table tr .tdfooter p a {
+	color: #FFF;
+}
+#container .content ul li {
+	text-align: left;
+}
