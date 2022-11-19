@@ -21,14 +21,18 @@ import org.pallas.sbs.dto.GetImportFromResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ElsoController {
 
 	private GetImportFromResponse _response = new GetImportFromResponse();
@@ -42,8 +46,13 @@ public class ElsoController {
 	public void display() {
 		System.out.println("Elso Controller!");
 	}
-
-	@GetMapping("elso")
+	
+	@GetMapping("/elso")
+	public String getelso() {
+		return "Get";
+	}
+	
+	@PostMapping("/elso")
 	public GetImportFromResponse elsoMethodus() {
 		_response = new GetImportFromResponse();
 		Resource resource = new ClassPathResource("valami.csv");

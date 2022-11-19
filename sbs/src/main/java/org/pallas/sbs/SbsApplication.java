@@ -11,7 +11,13 @@ public class SbsApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(SbsApplication.class, args);
+		//ElsoController elso = new ElsoController();
+		//ElsoController masodik = new ElsoController();
 		ElsoController elso = ctx.getBean(ElsoController.class);
+		ElsoController masodik = ctx.getBean(ElsoController.class);
+		
+		System.out.println(elso);
+		System.out.println(masodik);
 		elso.display();
 	}
 
