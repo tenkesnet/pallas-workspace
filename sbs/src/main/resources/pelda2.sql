@@ -14,3 +14,14 @@ select alk_nev ,fizetes , premium ,coalesce(premium,0) from alkalmazott where fi
 select * from alkalmazott a join reszleg re on a.reszleg_id  = re.id where re.reszleg_kod in ( select reszleg_kod from reszleg r where r.reszleg_nev like '%AUTO%');
 
 insert into reszleg  (reszleg_kod,reszleg_nev,reszleg_cim) values (80,'KOZPONT','PECS')
+
+(49.) select * from reszleg where lower(reszleg_nev) not like '%auto%';
+
+(81.)
+SELECT 
+rendszam,vasarlas_datuma,
+extract(year from age(now(), vasarlas_datuma)) * 12 + extract(month from age(now(), vasarlas_datuma)) ho,
+(ar/100)*3 amort_ert,
+ar vasarlasi_ar,
+ar-((ar/100)*3*(extract(year from age(now(), vasarlas_datuma)) * 12 + extract(month from age(now(), vasarlas_datuma))))
+FROM autok WHERE vasarlas_datuma < '1994-01-01';
