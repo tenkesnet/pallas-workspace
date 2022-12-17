@@ -35,7 +35,7 @@ public class Alkalmazott {
 	@JoinColumn(name="RESZLEG_ID")
 	private Reszleg reszleg;
 	
-	public String getReszelg() {
-		return reszleg.reszlegNev;
+	public Reszleg getReszelg() {
+		return reszleg;
 	}
 }

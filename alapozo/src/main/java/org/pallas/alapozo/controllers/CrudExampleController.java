@@ -1,6 +1,10 @@
 package org.pallas.alapozo.controllers;
 
 
+import java.util.ArrayList;
+
+import org.pallas.alapozo.ViewModel.AlkalmazottView;
+import org.pallas.alapozo.ViewModel.ReszlegView;
 import org.pallas.alapozo.abstraction.ComplexResult;
 import org.pallas.alapozo.model.Alkalmazott;
 import org.pallas.alapozo.model.AutoCsop;
@@ -47,8 +51,17 @@ public class CrudExampleController {
 	}
 	
 	@GetMapping("/getAllReszleg")
-	public ComplexResult<Iterable<Reszleg>> getAllReszleg() {
-		return _service.getAllReszleg();
+	public Iterable<ReszlegView> getAllReszleg() {
+		ComplexResult<Iterable<Reszleg>> result =  _service.getAllReszleg();
+		ArrayList<ReszlegView> reszlegek = new ArrayList<ReszlegView>();
+		result.Object.forEach( x -> {
+			ArrayList<AlkalmazottView> alkalmazottak = new ArrayList<AlkalmazottView>();
+			x.getAlkalmazottak().forEach( y->{
+				alkalmazottak.add(new AlkalmazottView(y.id, y.alkKod, y.alkNev, y.beosztas, y.fizetes, y.premium, y.belepes, null));
+			});
+			reszlegek.add(new ReszlegView(x.id, x.reszlegKod, x.reszlegNev, x.reszlegCim, alkalmazottak));
+		});
+		return reszlegek;
 	}
 	
 	@GetMapping("/getAllTipus")
@@ -57,7 +70,13 @@ public class CrudExampleController {
 	}
 	
 	@GetMapping("/getAllAlkalmazott")
-	public ComplexResult<Iterable<Alkalmazott>> getAllAlkalmazott() {
-		return _service.getAllAlkalmazott();
+	public Iterable<AlkalmazottView> getAllAlkalmazott() {
+		ComplexResult<Iterable<Alkalmazott>> result = _service.getAllAlkalmazott();
+		ArrayList<AlkalmazottView> alkalmazottViews = new ArrayList<AlkalmazottView>();
+		result.Object.forEach( x -> {
+			alkalmazottViews.add(new AlkalmazottView(x.id, x.alkKod, x.alkNev, x.beosztas, x.fizetes, x.premium,x.belepes , 
+					new ReszlegView(x.getReszelg().id, x.getReszelg().reszlegKod, x.getReszelg().reszlegNev, x.getReszelg().reszlegCim, null) ));
+		});
+		return alkalmazottViews;
 	}
 }
