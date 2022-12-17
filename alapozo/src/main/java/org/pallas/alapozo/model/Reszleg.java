@@ -1,10 +1,14 @@
 package org.pallas.alapozo.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,4 +25,8 @@ public class Reszleg {
 	
 	@Column(length = 15, nullable = false)
 	public String reszlegCim;
+	
+	@OneToMany(mappedBy = "reszleg")
+	public List<Alkalmazott> alkalmazottak = new ArrayList<>();
+	
 }
