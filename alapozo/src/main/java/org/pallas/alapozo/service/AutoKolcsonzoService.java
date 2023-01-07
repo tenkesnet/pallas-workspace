@@ -1,5 +1,6 @@
 package org.pallas.alapozo.service;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 
 import org.pallas.alapozo.abstraction.ComplexResult;
@@ -88,6 +89,48 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 		ComplexResult<Iterable<Alkalmazott>> result=new ComplexResult<>();
 		try {
 			result.Object = _alkalmazottRepo.findAll();
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,"Not found",HttpStatus.NOT_FOUND);
+		} catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
+	
+	@Override
+	public ComplexResult<Iterable<Alkalmazott>> getAlkNevFromAlkalmazott(String name) {
+		ComplexResult<Iterable<Alkalmazott>> result=new ComplexResult<>();
+		try {
+			result.Object = _alkalmazottRepo.findByAlkNev(name);
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,"Not found",HttpStatus.NOT_FOUND);
+		} catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
+
+	@Override
+	public ComplexResult<Iterable<Alkalmazott>> getAlkNevContainingFromAlkalmazott(String name) {
+		ComplexResult<Iterable<Alkalmazott>> result=new ComplexResult<>();
+		try {
+			result.Object = _alkalmazottRepo.findByAlkNevIgnoreCaseContaining(name);
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,"Not found",HttpStatus.NOT_FOUND);
+		} catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
+	
+	@Override
+	public ComplexResult<Iterable<Alkalmazott>> getBelepesBetween(Date start, Date end) {
+		ComplexResult<Iterable<Alkalmazott>> result=new ComplexResult<>();
+		try {
+			result.Object = _alkalmazottRepo.findByBelepesBetween(start,end);
 		} catch (NoSuchElementException e) {
 			return new ComplexResult<Iterable<Alkalmazott>>(null,"Not found",HttpStatus.NOT_FOUND);
 		} catch(InvalidDataAccessResourceUsageException e) {

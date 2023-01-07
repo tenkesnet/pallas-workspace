@@ -1,7 +1,11 @@
 package org.pallas.alapozo.controllers;
 
-
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.pallas.alapozo.ViewModel.AlkalmazottView;
 import org.pallas.alapozo.ViewModel.ReszlegView;
@@ -12,12 +16,12 @@ import org.pallas.alapozo.model.Reszleg;
 import org.pallas.alapozo.model.Tipus;
 import org.pallas.alapozo.service.IAutoKolcsonzoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 public class CrudExampleController {
@@ -30,12 +34,12 @@ public class CrudExampleController {
 //	}
 
 	@GetMapping("/getAutoCsopById")
-	public ComplexResult<AutoCsop> getAutoCsopById(@RequestParam String id,@RequestParam String name) {
-		String str="inc";
+	public ComplexResult<AutoCsop> getAutoCsopById(@RequestParam String id, @RequestParam String name) {
+		String str = "inc";
 		int idvalue = 0;
 		try {
-			idvalue=Integer.parseInt(id);			
-			if(name.equals(str)) {
+			idvalue = Integer.parseInt(id);
+			if (name.equals(str)) {
 				idvalue++;
 			}
 			return _service.getAutoCsopById(idvalue);
@@ -44,39 +48,39 @@ public class CrudExampleController {
 		}
 	}
 
-	
 	@GetMapping("/getAllAutoCsop")
 	public ComplexResult<Iterable<AutoCsop>> getAllAutoCsop() {
 		return _service.getAllAutoCsop();
 	}
-	
+
 	@GetMapping("/getAllReszleg")
-	public Iterable<ReszlegView> getAllReszleg() {
-		ComplexResult<Iterable<Reszleg>> result =  _service.getAllReszleg();
-		ArrayList<ReszlegView> reszlegek = new ArrayList<ReszlegView>();
-		result.Object.forEach( x -> {
-			ArrayList<AlkalmazottView> alkalmazottak = new ArrayList<AlkalmazottView>();
-			x.getAlkalmazottak().forEach( y->{
-				alkalmazottak.add(new AlkalmazottView(y.id, y.alkKod, y.alkNev, y.beosztas, y.fizetes, y.premium, y.belepes, null));
-			});
-			reszlegek.add(new ReszlegView(x.id, x.reszlegKod, x.reszlegNev, x.reszlegCim, alkalmazottak));
-		});
-		return reszlegek;
+	public Iterable<Reszleg> getAllReszleg() {
+		ComplexResult<Iterable<Reszleg>> result = _service.getAllReszleg();
+		
+		return result.Object;
 	}
-	
+
 	@GetMapping("/getAllTipus")
 	public ComplexResult<Iterable<Tipus>> getAllTipus() {
 		return _service.getAllTipus();
 	}
-	
+
 	@GetMapping("/getAllAlkalmazott")
-	public Iterable<AlkalmazottView> getAllAlkalmazott() {
+	public Iterable<Alkalmazott> getAllAlkalmazott() {
 		ComplexResult<Iterable<Alkalmazott>> result = _service.getAllAlkalmazott();
-		ArrayList<AlkalmazottView> alkalmazottViews = new ArrayList<AlkalmazottView>();
-		result.Object.forEach( x -> {
-			alkalmazottViews.add(new AlkalmazottView(x.id, x.alkKod, x.alkNev, x.beosztas, x.fizetes, x.premium,x.belepes , 
-					new ReszlegView(x.getReszelg().id, x.getReszelg().reszlegKod, x.getReszelg().reszlegNev, x.getReszelg().reszlegCim, null) ));
-		});
-		return alkalmazottViews;
+		return result.Object;
+	}
+
+	@GetMapping("/getAlkNev")
+	public Iterable<Alkalmazott> getAlkNev(@RequestParam String name) {
+		ComplexResult<Iterable<Alkalmazott>> result = _service.getAlkNevContainingFromAlkalmazott(name);
+		return result.Object;
+	}
+	
+	@GetMapping("/getBelepesBetween")
+	public Iterable<Alkalmazott> getBelepesBetween(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date start,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
+		ComplexResult<Iterable<Alkalmazott>> result = _service.getBelepesBetween(start, end);
+		return result.Object;
 	}
 }
