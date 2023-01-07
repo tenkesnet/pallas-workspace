@@ -1,46 +1,48 @@
 package org.pallas.alapozo.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
 @Table(name = "RESZLEG")
 public class Reszleg {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	public int id;
 
-	private int reszlegKod;
+	public int reszlegKod;
 
 	@Column(length = 20, nullable = false)
-	private String reszlegNev;
+	public String reszlegNev;
 
 	@Column(length = 15, nullable = false)
-	private String reszlegCim;
+	public String reszlegCim;
 
-	@OneToMany(mappedBy = "reszleg")
-	@JsonIdentityReference(alwaysAsId = true)
-	//@JsonPropertyDescription()
-	private List<Alkalmazott> alkalmazottak;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "reszleg")
+	private List<Alkalmazott> alkalmazottak = new ArrayList<>();
+
+	
+	public void setAlkalmazottak(List<Alkalmazott> alkalmazottak) {
+		this.alkalmazottak = alkalmazottak;
+	}
+
+	public List<Alkalmazott> getAlkalmazottak() {
+		return alkalmazottak;
+	}
+
+	
+
 }

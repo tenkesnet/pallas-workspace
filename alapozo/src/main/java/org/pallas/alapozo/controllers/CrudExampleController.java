@@ -51,9 +51,17 @@ public class CrudExampleController {
 	}
 	
 	@GetMapping("/getAllReszleg")
-	public Iterable<Reszleg> getAllReszleg() {
+	public Iterable<ReszlegView> getAllReszleg() {
 		ComplexResult<Iterable<Reszleg>> result =  _service.getAllReszleg();
-		return result.Object;
+		ArrayList<ReszlegView> reszlegek = new ArrayList<ReszlegView>();
+		result.Object.forEach( x -> {
+			ArrayList<AlkalmazottView> alkalmazottak = new ArrayList<AlkalmazottView>();
+			x.getAlkalmazottak().forEach( y->{
+				alkalmazottak.add(new AlkalmazottView(y.id, y.alkKod, y.alkNev, y.beosztas, y.fizetes, y.premium, y.belepes, null));
+			});
+			reszlegek.add(new ReszlegView(x.id, x.reszlegKod, x.reszlegNev, x.reszlegCim, alkalmazottak));
+		});
+		return reszlegek;
 	}
 	
 	@GetMapping("/getAllTipus")
@@ -62,14 +70,13 @@ public class CrudExampleController {
 	}
 	
 	@GetMapping("/getAllAlkalmazott")
-	public Iterable<Alkalmazott> getAllAlkalmazott() {
+	public Iterable<AlkalmazottView> getAllAlkalmazott() {
 		ComplexResult<Iterable<Alkalmazott>> result = _service.getAllAlkalmazott();
-		return result.Object;
-	}
-	
-	@GetMapping("/getAlkNev")
-	public Iterable<Alkalmazott> getAlkNev(@RequestParam String name) {
-		ComplexResult<Iterable<Alkalmazott>> result = _service.getAlkNevContainingFromAlkalmazott(name);
-		return result.Object;
+		ArrayList<AlkalmazottView> alkalmazottViews = new ArrayList<AlkalmazottView>();
+		result.Object.forEach( x -> {
+			alkalmazottViews.add(new AlkalmazottView(x.id, x.alkKod, x.alkNev, x.beosztas, x.fizetes, x.premium,x.belepes , 
+					new ReszlegView(x.getReszelg().id, x.getReszelg().reszlegKod, x.getReszelg().reszlegNev, x.getReszelg().reszlegCim, null) ));
+		});
+		return alkalmazottViews;
 	}
 }

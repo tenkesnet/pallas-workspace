@@ -96,33 +96,4 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 		result.Status=HttpStatus.OK;
 		return result;
 	}
-	
-	@Override
-	public ComplexResult<Iterable<Alkalmazott>> getAlkNevFromAlkalmazott(String name) {
-		ComplexResult<Iterable<Alkalmazott>> result=new ComplexResult<>();
-		try {
-			result.Object = _alkalmazottRepo.findByAlkNev(name);
-		} catch (NoSuchElementException e) {
-			return new ComplexResult<Iterable<Alkalmazott>>(null,"Not found",HttpStatus.NOT_FOUND);
-		} catch(InvalidDataAccessResourceUsageException e) {
-			return new ComplexResult<Iterable<Alkalmazott>>(null,e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		result.Status=HttpStatus.OK;
-		return result;
-	}
-	
-	@Override
-	public ComplexResult<Iterable<Alkalmazott>> getAlkNevContainingFromAlkalmazott(String name) {
-		ComplexResult<Iterable<Alkalmazott>> result=new ComplexResult<>();
-		try {
-			result.Object = _alkalmazottRepo.findByAlkNevContaining(name);
-		} catch (NoSuchElementException e) {
-			return new ComplexResult<Iterable<Alkalmazott>>(null,"Not found",HttpStatus.NOT_FOUND);
-		} catch(InvalidDataAccessResourceUsageException e) {
-			return new ComplexResult<Iterable<Alkalmazott>>(null,e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		result.Status=HttpStatus.OK;
-		return result;
-	}
-	
 }
