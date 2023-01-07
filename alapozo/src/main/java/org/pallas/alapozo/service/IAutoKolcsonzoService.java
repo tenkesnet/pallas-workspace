@@ -13,4 +13,6 @@ public interface IAutoKolcsonzoService {
 	ComplexResult<Iterable<Reszleg>> getAllReszleg();
 	ComplexResult<Iterable<Tipus>> getAllTipus();
 	ComplexResult<Iterable<Alkalmazott>> getAllAlkalmazott();
+	ComplexResult<Iterable<Alkalmazott>> getAlkNevFromAlkalmazott(String name);
+	ComplexResult<Iterable<Alkalmazott>> getAlkNevContainingFromAlkalmazott(String name);
 }
