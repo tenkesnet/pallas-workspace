@@ -18,4 +18,5 @@ public interface IAutoKolcsonzoService {
 	ComplexResult<Iterable<Alkalmazott>> getAlkNevFromAlkalmazott(String name);
 	ComplexResult<Iterable<Alkalmazott>> getAlkNevContainingFromAlkalmazott(String name);
 	ComplexResult<Iterable<Alkalmazott>> getBelepesBetween(Date start, Date end);
+	ComplexResult<Iterable<Alkalmazott>> getBelepesBetweenAndFizetesGreaterThan(Date start, Date end, int fizetes);
 }

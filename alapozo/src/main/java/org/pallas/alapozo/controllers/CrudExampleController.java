@@ -1,5 +1,7 @@
 package org.pallas.alapozo.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,7 +58,7 @@ public class CrudExampleController {
 	@GetMapping("/getAllReszleg")
 	public Iterable<Reszleg> getAllReszleg() {
 		ComplexResult<Iterable<Reszleg>> result = _service.getAllReszleg();
-		
+
 		return result.Object;
 	}
 
@@ -76,11 +78,31 @@ public class CrudExampleController {
 		ComplexResult<Iterable<Alkalmazott>> result = _service.getAlkNevContainingFromAlkalmazott(name);
 		return result.Object;
 	}
-	
+
 	@GetMapping("/getBelepesBetween")
 	public Iterable<Alkalmazott> getBelepesBetween(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date start,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
 		ComplexResult<Iterable<Alkalmazott>> result = _service.getBelepesBetween(start, end);
 		return result.Object;
+	}
+
+	@GetMapping("/getBelepesBetweenAndFizetesGreaterThan")
+	public ComplexResult<Iterable<Alkalmazott>> getBelepesBetweenAndFizetesGreaterThan(@RequestParam String start,
+			@RequestParam String end, @RequestParam String fizetes) {
+		Date startDate;
+		Date endDate;
+		int fizetesInt;
+		try {
+			startDate = new SimpleDateFormat("yyyy-MM-dd").parse(start);
+			endDate = new SimpleDateFormat("yyyy-MM-dd").parse(end);
+			fizetesInt = Integer.parseInt(fizetes)
+;		} catch (ParseException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,"Date parse error.",HttpStatus.BAD_REQUEST);
+		} catch (NumberFormatException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,"Fizetes is integer.",HttpStatus.BAD_REQUEST);
+		}
+		ComplexResult<Iterable<Alkalmazott>> result = _service.getBelepesBetweenAndFizetesGreaterThan(startDate, endDate,
+				fizetesInt);
+		return result;
 	}
 }

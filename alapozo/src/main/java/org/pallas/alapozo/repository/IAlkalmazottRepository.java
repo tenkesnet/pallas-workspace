@@ -12,4 +12,5 @@ public interface IAlkalmazottRepository extends JpaRepository<Alkalmazott, Integ
 	List<Alkalmazott> findByAlkNevContaining(String name);
 	List<Alkalmazott> findByAlkNevIgnoreCaseContaining(String name);
 	List<Alkalmazott> findByBelepesBetween(Date start,Date end);
+	List<Alkalmazott> findByBelepesBetweenAndFizetesGreaterThan(Date start,Date end,int fizetes);
 }

@@ -139,4 +139,18 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 		result.Status=HttpStatus.OK;
 		return result;
 	}
+	
+	@Override
+	public ComplexResult<Iterable<Alkalmazott>> getBelepesBetweenAndFizetesGreaterThan(Date start, Date end,int fizetes) {
+		ComplexResult<Iterable<Alkalmazott>> result=new ComplexResult<>();
+		try {
+			result.Object = _alkalmazottRepo.findByBelepesBetweenAndFizetesGreaterThan(start,end,fizetes);
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,"Not found",HttpStatus.NOT_FOUND);
+		} catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<Iterable<Alkalmazott>>(null,e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
 }

@@ -2,6 +2,9 @@ package org.pallas.alapozo.abstraction;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+
 public class ComplexResult<T> {
 	public T Object;
 	public HttpStatus Status;
