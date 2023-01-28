@@ -56,6 +56,11 @@ public class CrudExampleController {
 		return _service.getAllAutoCsop();
 	}
 	
+	@GetMapping("/getAllAutoCsopRendszam")
+	public ComplexResult<Iterable<AutoCsop>> getAllAutoCsopRendszam(@RequestParam String rendszam) {
+		return _service.getAllAutoCsopRendszam(rendszam);
+	}
+	
 	@GetMapping("/getAllAutok")
 	public ComplexResult<Iterable<Autok>> getAllAutok() {
 		return _service.getAllAutok();

@@ -194,6 +194,20 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 		return result;
 	}
 	
+	@Override
+	public ComplexResult<Iterable<AutoCsop>> getAllAutoCsopRendszam(String rendszam) {
+		ComplexResult<Iterable<AutoCsop>> result=new ComplexResult<>();
+		try {
+			result.Object = _autoCsopRepo.findByAutokRendszamIgnoreCase(rendszam);
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<Iterable<AutoCsop>>(null,"Not found",HttpStatus.NOT_FOUND);
+		} catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<Iterable<AutoCsop>>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
+	
 //	@Override
 //	public ComplexResult<Iterable<Rendeles>> getAllRendeles() {
 //		ComplexResult<Iterable<Rendeles>> result=new ComplexResult<>();

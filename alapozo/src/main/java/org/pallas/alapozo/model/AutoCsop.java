@@ -35,7 +35,7 @@ public class AutoCsop {
 	public int kmDij;
 	public int napiDij;
 	
-	@JsonIdentityReference(alwaysAsId = true)
+	//@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(fetch=FetchType.EAGER,mappedBy = "autoCsop")	
 	private List<Autok> autok = new ArrayList<>();
 }

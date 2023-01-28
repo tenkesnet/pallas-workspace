@@ -13,6 +13,7 @@ public interface IAutoKolcsonzoService {
 
 //	ComplexResult<AutoCsop> getAutoCsopById(int id);
 	ComplexResult<Iterable<AutoCsop>> getAllAutoCsop();
+	ComplexResult<Iterable<AutoCsop>> getAllAutoCsopRendszam(String rendszam);
 	ComplexResult<Iterable<Reszleg>> getAllReszleg();
 //	ComplexResult<Iterable<Tipus>> getAllTipus();
 	ComplexResult<Iterable<Autok>> getAllAutok();
