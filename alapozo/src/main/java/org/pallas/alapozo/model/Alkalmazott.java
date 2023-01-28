@@ -1,6 +1,8 @@
 package org.pallas.alapozo.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
@@ -46,9 +48,11 @@ public class Alkalmazott {
 	
 	
 	
-	@JsonIdentityReference(alwaysAsId = true)
-	@ManyToOne(fetch=FetchType.EAGER)	
-	@JoinColumn(name="AUTOK_ID",referencedColumnName="ID")
-	private Autok autok;
+	
+//	  @JsonIdentityReference(alwaysAsId = true)
+//	  @OneToMany(fetch=FetchType.EAGER)
+//	  @JoinColumn(name="AUTOK_ID",referencedColumnName="ID") 
+//	  private List<Autok> autok = new ArrayList<>();
+	 
 	
 }

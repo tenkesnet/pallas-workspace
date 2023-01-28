@@ -39,15 +39,15 @@ public class Reszleg {
 	@Column(length = 15, nullable = false)
 	public String reszlegCim;
 
-	//@JsonIdentityReference(alwaysAsId = true)
+	@JsonIdentityReference(alwaysAsId = true)
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "reszleg")
-	//@JoinColumn(name = "ALKALMAZOTT_ID")
+	//@JoinColumn(name = "ALKALMAZOTT_ID",referencedColumnName="ID")
 	private List<Alkalmazott> alkalmazottak = new ArrayList<>();
 	
 	@JsonIdentityReference(alwaysAsId = true)
-	@ManyToOne(fetch=FetchType.EAGER)	
-	@JoinColumn(name="AUTOK_ID", referencedColumnName="ID")
-	private Autok autok;
+	@OneToMany(fetch=FetchType.EAGER,mappedBy = "reszleg")	
+	//@JoinColumn(name="AUTOK_ID", referencedColumnName="ID")
+	private List<Autok> autok = new ArrayList<>();
 
 	
 	public void setAlkalmazottak(List<Alkalmazott> alkalmazottak) {

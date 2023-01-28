@@ -6,8 +6,9 @@ import java.util.List;
 
 import org.springframework.lang.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -20,8 +21,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
+@Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "AUTOK")
 public class Autok {
 
@@ -58,16 +62,17 @@ public class Autok {
 	@Column(length = 1, nullable = false)
 	public String allapot;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "autok")
+	//@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "autok")
 	//@JoinColumn(name = "RESZLEG_id")
-	private List<Reszleg> reszleg = new ArrayList<>();
+	//private Reszleg reszleg;
 //	@OneToMany
 //    @JoinColumn(name = "RESZLEG_id")
 //    public Reszleg reszleg;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "autok")
-	//@JoinColumn(name = "ALKALMAZOTT_id")
-	private List<Alkalmazott> alkalmazott = new ArrayList<>();
+	@JsonIdentityReference(alwaysAsId = true)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "RESZLEG_ID",referencedColumnName = "ID")
+	private Reszleg reszleg ;
 //	@OneToMany
 //    @JoinColumn(name = "ALKALMAZOTT_id")
 //    public Alkalmazott alkalmazott;
