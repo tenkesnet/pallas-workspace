@@ -49,10 +49,9 @@ public class Alkalmazott {
 	
 	
 	
-//	  @JsonIdentityReference(alwaysAsId = true)
-//	  @OneToMany(fetch=FetchType.EAGER)
-//	  @JoinColumn(name="AUTOK_ID",referencedColumnName="ID") 
-//	  private List<Autok> autok = new ArrayList<>();
+	  //@JsonIdentityReference(alwaysAsId = true)
+	  @OneToMany(fetch=FetchType.EAGER,mappedBy = "alkalmazott")	
+	  private List<Autok> autok = new ArrayList<>();
 	 
 	
 }

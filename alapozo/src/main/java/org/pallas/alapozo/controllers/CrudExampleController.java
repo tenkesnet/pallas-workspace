@@ -13,6 +13,7 @@ import org.pallas.alapozo.ViewModel.AlkalmazottView;
 import org.pallas.alapozo.ViewModel.ReszlegView;
 import org.pallas.alapozo.abstraction.ComplexResult;
 import org.pallas.alapozo.model.Alkalmazott;
+import org.pallas.alapozo.model.AutoCsop;
 import org.pallas.alapozo.model.Autok;
 import org.pallas.alapozo.model.Reszleg;
 
@@ -50,11 +51,11 @@ public class CrudExampleController {
 //		}
 //	}
 
-//	@GetMapping("/getAllAutoCsop")
-//	public ComplexResult<Iterable<AutoCsop>> getAllAutoCsop() {
-//		return _service.getAllAutoCsop();
-//	}
-//	
+	@GetMapping("/getAllAutoCsop")
+	public ComplexResult<Iterable<AutoCsop>> getAllAutoCsop() {
+		return _service.getAllAutoCsop();
+	}
+	
 	@GetMapping("/getAllAutok")
 	public ComplexResult<Iterable<Autok>> getAllAutok() {
 		return _service.getAllAutok();

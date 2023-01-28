@@ -5,10 +5,12 @@ import java.util.NoSuchElementException;
 
 import org.pallas.alapozo.abstraction.ComplexResult;
 import org.pallas.alapozo.model.Alkalmazott;
+import org.pallas.alapozo.model.AutoCsop;
 import org.pallas.alapozo.model.Autok;
 import org.pallas.alapozo.model.Reszleg;
 
 import org.pallas.alapozo.repository.IAlkalmazottRepository;
+import org.pallas.alapozo.repository.IAutoCsopRepository;
 import org.pallas.alapozo.repository.IAutokRepository;
 import org.pallas.alapozo.repository.IReszlegRepository;
 
@@ -29,6 +31,8 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 	private IAlkalmazottRepository _alkalmazottRepo;
 	@Autowired
 	private IAutokRepository _autokRepo;
+	@Autowired
+	private IAutoCsopRepository _autoCsopRepo;
 //	@Autowired
 //	private IRendelesRepository _rendelesRepo;
 //	@Autowired
@@ -171,6 +175,20 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 			return new ComplexResult<Iterable<Autok>>(null,"Not found",HttpStatus.NOT_FOUND);
 		} catch(InvalidDataAccessResourceUsageException e) {
 			return new ComplexResult<Iterable<Autok>>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
+	
+	@Override
+	public ComplexResult<Iterable<AutoCsop>> getAllAutoCsop() {
+		ComplexResult<Iterable<AutoCsop>> result=new ComplexResult<>();
+		try {
+			result.Object = _autoCsopRepo.findAll();
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<Iterable<AutoCsop>>(null,"Not found",HttpStatus.NOT_FOUND);
+		} catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<Iterable<AutoCsop>>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		result.Status=HttpStatus.OK;
 		return result;

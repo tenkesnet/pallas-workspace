@@ -46,10 +46,7 @@ public class Autok {
 //	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "autok")
 //	@JoinColumn(name = "AUTO_CSOP_id")
 //	private List<AutoCsop> autoCsop = new ArrayList<>();
-//	@OneToMany
-//    @JoinColumn(name = "AUTO_CSOP_id")
-//    public AutoCsop autoCsop;
-
+	
 	public Date vasarlasDatuma;
 
 	public float ar;
@@ -73,9 +70,16 @@ public class Autok {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "RESZLEG_ID",referencedColumnName = "ID")
 	private Reszleg reszleg ;
-//	@OneToMany
-//    @JoinColumn(name = "ALKALMAZOTT_id")
-//    public Alkalmazott alkalmazott;
+//	
+	@JsonIdentityReference(alwaysAsId = true)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ALKALMAZOTT_ID",referencedColumnName = "ID")
+    public Alkalmazott alkalmazott;
+	
+	@JsonIdentityReference(alwaysAsId = true)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "AUTO_CSOP_ID",referencedColumnName = "ID")
+    public AutoCsop autoCsop;
 	
 //	@JsonIdentityReference(alwaysAsId = true)
 //	@ManyToOne(fetch=FetchType.EAGER)	
