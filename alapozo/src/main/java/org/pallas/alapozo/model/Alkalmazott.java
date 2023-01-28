@@ -16,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -40,7 +41,14 @@ public class Alkalmazott {
 	
 	@JsonIdentityReference(alwaysAsId = true)
 	@ManyToOne(fetch=FetchType.EAGER)	
-	@JoinColumn(name="RESZLEG_ID")
+	@JoinColumn(name="RESZLEG_ID", referencedColumnName = "ID")
 	private Reszleg reszleg;
+	
+	
+	
+	@JsonIdentityReference(alwaysAsId = true)
+	@ManyToOne(fetch=FetchType.EAGER)	
+	@JoinColumn(name="AUTOK_ID",referencedColumnName="ID")
+	private Autok autok;
 	
 }
