@@ -9,9 +9,12 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 import org.pallas.alapozo.ViewModel.AlkalmazottView;
 import org.pallas.alapozo.ViewModel.ReszlegView;
 import org.pallas.alapozo.abstraction.ComplexResult;
+import org.pallas.alapozo.mapper.ReszlegMapper;
 import org.pallas.alapozo.model.Alkalmazott;
 import org.pallas.alapozo.model.AutoCsop;
 import org.pallas.alapozo.model.Autok;
@@ -30,11 +33,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CrudExampleController {
 	@Autowired
 	private IAutoKolcsonzoService _service;
-
-//	@GetMapping("/getAutoCsopById/{id}")
-//	public ComplexResult<AutoCsop> getAutoCsopById(@PathVariable int id) {
-//		return _service.getAutoCsopById(id);
-//	}
+	
+	
+	
+	@GetMapping("/getAutoCsopById/{id}")
+	public ComplexResult<AutoCsop> getAutoCsopById(@PathVariable int id) {
+		return _service.getAutoCsopById(id);
+	}
 
 //	@GetMapping("/getAutoCsopById")
 //	public ComplexResult<AutoCsop> getAutoCsopById(@RequestParam String id, @RequestParam String name) {
@@ -99,13 +104,7 @@ public class CrudExampleController {
 //	}
 	
 
-	@GetMapping("/getAllReszleg")
-	public Iterable<Reszleg> getAllReszleg() {
-		ComplexResult<Iterable<Reszleg>> result = _service.getAllReszleg();
-
-		return result.Object;
-	}
-
+	
 //	@GetMapping("/getAllTipus")
 //	public ComplexResult<Iterable<Tipus>> getAllTipus() {
 //		return _service.getAllTipus();

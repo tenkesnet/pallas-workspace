@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,10 +23,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Data @NoArgsConstructor @AllArgsConstructor @Embeddable
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "ALKALMAZOTT")
 public class Alkalmazott {
@@ -40,18 +44,14 @@ public class Alkalmazott {
 	@Column(nullable = true)
 	public Integer premium;
 	public Date belepes;
-	
+
 	@JsonIdentityReference(alwaysAsId = true)
-	@ManyToOne(fetch=FetchType.EAGER)	
-	@JoinColumn(name="RESZLEG_ID", referencedColumnName = "ID")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "RESZLEG_ID", referencedColumnName = "ID")
 	private Reszleg reszleg;
-	
-	
-	
-	
-	  //@JsonIdentityReference(alwaysAsId = true)
-	  @OneToMany(fetch=FetchType.EAGER,mappedBy = "alkalmazott")	
-	  private List<Autok> autok = new ArrayList<>();
-	 
-	
+
+	// @JsonIdentityReference(alwaysAsId = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "alkalmazott")
+	private List<Autok> autok = new ArrayList<>();
+
 }

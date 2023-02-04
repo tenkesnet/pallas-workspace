@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data @AllArgsConstructor @NoArgsConstructor @Embeddable
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "RESZLEG")
 public class Reszleg {
@@ -40,12 +41,12 @@ public class Reszleg {
 	public String reszlegCim;
 
 	//@JsonIdentityReference(alwaysAsId = true)
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "reszleg")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "reszleg")
 	//@JoinColumn(name = "ALKALMAZOTT_ID",referencedColumnName="ID")
 	private List<Alkalmazott> alkalmazottak = new ArrayList<>();
 	
 	//@JsonIdentityReference(alwaysAsId = true)
-	@OneToMany(fetch=FetchType.EAGER,mappedBy = "reszleg")	
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "reszleg")	
 	private List<Autok> autok = new ArrayList<>();
 
 	

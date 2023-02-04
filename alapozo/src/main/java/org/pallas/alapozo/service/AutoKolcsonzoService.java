@@ -40,19 +40,19 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 	
 	
 	
-//	@Override
-//	public ComplexResult<AutoCsop> getAutoCsopById(int id) {
-//		ComplexResult<AutoCsop> result=new ComplexResult<>();
-//		try {
-//			result.Object = _autocsopRepo.findById(id).get();
-//		} catch (NoSuchElementException e) {
-//			return new ComplexResult<AutoCsop>(null,"Not found",HttpStatus.NOT_FOUND);
-//		}  catch(InvalidDataAccessResourceUsageException e) {
-//			return new ComplexResult<AutoCsop>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//		result.Status=HttpStatus.OK;
-//		return result;
-//	}
+	@Override
+	public ComplexResult<AutoCsop> getAutoCsopById(int id) {
+		ComplexResult<AutoCsop> result=new ComplexResult<>();
+		try {
+			result.Object = _autoCsopRepo.findById(id).get();
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<AutoCsop>(null,"Not found",HttpStatus.NOT_FOUND);
+		}  catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<AutoCsop>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
 	
 //	@Override
 //	public ComplexResult<Iterable<AutoCsop>> getAllAutoCsop() {
@@ -80,6 +80,30 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 		}
 		result.Status=HttpStatus.OK;
 		return result;
+	}
+	
+	@Override
+	public ComplexResult<Reszleg> getReszlegId(int id) {
+		ComplexResult<Reszleg> result=new ComplexResult<>();
+		try {
+			result.Object = _reszlegRepo.findById(id).get();
+		} catch (NoSuchElementException e) {
+			return new ComplexResult<Reszleg>(null,"Not found",HttpStatus.NOT_FOUND);
+		}  catch(InvalidDataAccessResourceUsageException e) {
+			return new ComplexResult<Reszleg>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		result.Status=HttpStatus.OK;
+		return result;
+	}
+	
+	@Override
+	public Reszleg saveReszleg(Reszleg reszleg) {
+		return _reszlegRepo.save(reszleg);
+	}
+	
+	@Override
+	public Alkalmazott saveAlkalmazott(Alkalmazott alkalmazott) {
+		return _alkalmazottRepo.save(alkalmazott);
 	}
 	
 //	@Override

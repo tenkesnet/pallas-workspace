@@ -20,19 +20,4 @@ public class AlkalmazottView {
 	public Integer fizetes;
 	public Integer premium;
 	public Date belepes;
-	public ReszlegView reszleg;
-	
-	public AlkalmazottView(int id, int alkKod, String alkNev, String beosztas, Integer fizetes, Integer premium,
-			Date belepes, ReszlegView reszleg) {
-		
-		this.id = id;
-		this.alkKod = alkKod;
-		this.alkNev = alkNev;
-		this.beosztas = beosztas;
-		this.fizetes = fizetes;
-		this.premium = premium;
-		this.belepes = belepes;
-		this.reszleg = reszleg;
 	}
-	
-}

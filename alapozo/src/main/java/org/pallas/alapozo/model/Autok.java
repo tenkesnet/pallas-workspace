@@ -33,7 +33,7 @@ public class Autok {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 	
-	@Column(length = 7, nullable = false)
+	@Column(length = 20, nullable = false)
 	public String rendszam;
 	
 //	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "autok")
