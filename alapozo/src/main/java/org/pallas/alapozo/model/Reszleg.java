@@ -21,10 +21,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @Embeddable
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Embeddable
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Table(name = "RESZLEG")
 public class Reszleg {
@@ -41,12 +43,12 @@ public class Reszleg {
 	public String reszlegCim;
 
 	//@JsonIdentityReference(alwaysAsId = true)
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "reszleg")
+	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "reszleg")
 	//@JoinColumn(name = "ALKALMAZOTT_ID",referencedColumnName="ID")
 	private List<Alkalmazott> alkalmazottak = new ArrayList<>();
 	
 	//@JsonIdentityReference(alwaysAsId = true)
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "reszleg")	
+	@OneToMany(cascade = CascadeType.PERSIST,fetch=FetchType.LAZY,mappedBy = "reszleg")	
 	private List<Autok> autok = new ArrayList<>();
 
 	

@@ -102,6 +102,17 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 	}
 	
 	@Override
+	public void deleteReszleg(int id) {
+		try {
+			_reszlegRepo.deleteById(id);	
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return;
+	}
+	
+	@Override
 	public Alkalmazott saveAlkalmazott(Alkalmazott alkalmazott) {
 		return _alkalmazottRepo.save(alkalmazott);
 	}
