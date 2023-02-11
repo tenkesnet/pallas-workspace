@@ -43,12 +43,12 @@ public class Reszleg {
 	public String reszlegCim;
 
 	//@JsonIdentityReference(alwaysAsId = true)
-	@OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "reszleg")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "reszleg")
 	//@JoinColumn(name = "ALKALMAZOTT_ID",referencedColumnName="ID")
 	private List<Alkalmazott> alkalmazottak = new ArrayList<>();
 	
 	//@JsonIdentityReference(alwaysAsId = true)
-	@OneToMany(cascade = CascadeType.PERSIST,fetch=FetchType.LAZY,mappedBy = "reszleg")	
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY,mappedBy = "reszleg")	
 	private List<Autok> autok = new ArrayList<>();
 
 	

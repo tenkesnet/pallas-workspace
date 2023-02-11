@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 import org.pallas.alapozo.ViewModel.AlkalmazottView;
 import org.pallas.alapozo.ViewModel.AutokView;
 import org.pallas.alapozo.ViewModel.ReszlegView;
+import org.pallas.alapozo.ViewModel.SmallAlkalmazottView;
 import org.pallas.alapozo.model.Alkalmazott;
 import org.pallas.alapozo.model.Autok;
 import org.pallas.alapozo.model.Reszleg;
@@ -24,8 +25,8 @@ public interface ReszlegMapper {
 	Reszleg reszlegViewToReszleg(ReszlegView reszlegView);
 	
 	List<ReszlegView> reszlegToReszlegViews(Iterable<Reszleg> reszlegs);
-	AlkalmazottView alkalmazottToAlkalmazottView(Alkalmazott alkalmazott);
-	List<AlkalmazottView> alkalmazottToAlkalmazottViews(Iterable<Alkalmazott> alkalmazottak);
+	SmallAlkalmazottView AlkalmazottToSmallAlkalmazottView(Alkalmazott alkalmazott);
+	List<SmallAlkalmazottView> alkalmazottToSmallAlkalmazottViews(Iterable<Alkalmazott> alkalmazottak);
 	AutokView autokToAutokView(Autok autok);
 	List<AutokView> autokToAutokViews(Iterable<Autok> autok);
 }

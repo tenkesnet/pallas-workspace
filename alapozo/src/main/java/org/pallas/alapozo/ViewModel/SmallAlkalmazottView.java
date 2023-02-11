@@ -1,13 +1,14 @@
 package org.pallas.alapozo.ViewModel;
 
 import java.util.Date;
-import java.util.List;
-import org.pallas.alapozo.model.Autok;
 
-import org.pallas.alapozo.model.Reszleg;
 
-public class AlkalmazottView {
+/**
+ *
+ * @author bardo
+ */
 
+public class SmallAlkalmazottView {
     public int id;
     public int alkKod;
     public String alkNev;
@@ -15,6 +16,4 @@ public class AlkalmazottView {
     public Integer fizetes;
     public Integer premium;
     public Date belepes;
-    public Reszleg reszleg;
-    public List<Autok> autok;
 }

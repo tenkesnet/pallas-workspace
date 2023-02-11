@@ -88,18 +88,14 @@ public class AutoKolcsonzoService implements IAutoKolcsonzoService {
 		try {
 			result.Object = _reszlegRepo.findById(id).get();
 		} catch (NoSuchElementException e) {
-			return new ComplexResult<Reszleg>(null,"Not found",HttpStatus.NOT_FOUND);
+			return new ComplexResult<>(null,"Not found",HttpStatus.NOT_FOUND);
 		}  catch(InvalidDataAccessResourceUsageException e) {
-			return new ComplexResult<Reszleg>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ComplexResult<>(null,"Database Error",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		result.Status=HttpStatus.OK;
 		return result;
 	}
 	
-	@Override
-	public Reszleg saveReszleg(Reszleg reszleg) {
-		return _reszlegRepo.save(reszleg);
-	}
 	
 	@Override
 	public void deleteReszleg(int id) {

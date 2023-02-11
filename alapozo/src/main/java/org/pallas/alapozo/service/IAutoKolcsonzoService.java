@@ -16,7 +16,6 @@ public interface IAutoKolcsonzoService {
 	ComplexResult<Iterable<AutoCsop>> getAllAutoCsopRendszam(String rendszam);
 	ComplexResult<Iterable<Reszleg>> getAllReszleg();
 	ComplexResult<Reszleg> getReszlegId(int id);
-	Reszleg saveReszleg(Reszleg reszleg);
 	void deleteReszleg(int id);
 	Alkalmazott saveAlkalmazott(Alkalmazott alkalmazott);
 //	ComplexResult<Iterable<Tipus>> getAllTipus();
