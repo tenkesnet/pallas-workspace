@@ -1,19 +1,18 @@
 package org.pallas.alapozo.ViewModel;
 
 import java.util.Date;
-import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter @Setter
 public class AutokView {
-    public int id;
-	public String rendszam;
-	public Date vasarlasDatuma;
-	public float ar;
-	public int futottKm;
-	public Integer utSzerviz;
-	public String allapot;
+
+    private int id;
+    private String rendszam;
+    private Date vasarlasDatuma;
+    private float ar;
+    private int futottKm;
+    private Integer utSzerviz;
+    private String allapot;
 }

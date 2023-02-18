@@ -44,8 +44,8 @@ public class AlkalmazottController {
         if (alkalmazott.getReszleg() == null) {
             return new ComplexResult<>(null, "Not found reszleg", HttpStatus.NOT_FOUND);
         }
-        if (alkalmazott.getReszleg().id != 0) {
-            Reszleg reszleg = reszlegRepo.findById(alkalmazott.getReszleg().id).get();
+        if (alkalmazott.getReszleg().getId() != 0) {
+            Reszleg reszleg = reszlegRepo.findById(alkalmazott.getReszleg().getId()).get();
             alkalmazott.setReszleg(reszleg);
         }
         return new ComplexResult<>(_service.saveAlkalmazott(alkalmazott), "Saved ok.", HttpStatus.OK);

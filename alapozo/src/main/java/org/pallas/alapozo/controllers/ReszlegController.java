@@ -2,9 +2,11 @@ package org.pallas.alapozo.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.pallas.alapozo.ViewModel.ReszlegView;
 import org.pallas.alapozo.abstraction.ComplexResult;
+import org.pallas.alapozo.helpers.ReszlegControllerHelper;
 import org.pallas.alapozo.mapper.ReszlegMapper;
 import org.pallas.alapozo.model.Alkalmazott;
 import org.pallas.alapozo.model.Reszleg;
@@ -34,28 +36,17 @@ public class ReszlegController {
 
     @Autowired
     private IAlkalmazottRepository alkalmazottRepo;
+    
+    @Autowired
+    private ReszlegControllerHelper reszlegControllerHelper;
 
     @PostMapping()
-    public Reszleg add(@RequestBody ReszlegView request) {
-        Reszleg reszleg = ReszlegMapper.INSTANCE.reszlegViewToReszleg(request);
-        if (reszleg != null && reszleg.getAlkalmazottak() != null) {
-            List<Alkalmazott> alkalmazottak = new ArrayList<>();
-            for (Alkalmazott x : reszleg.getAlkalmazottak()) {
-                if (x.id != 0) {
-                    Alkalmazott alkalmazott = alkalmazottRepo.findById(x.id).get();
-                    alkalmazott.setReszleg(reszleg);
-                    alkalmazottak.add(alkalmazott);
-                } else {
-                    x.setReszleg(reszleg);
-                    alkalmazottak.add(x);
-                }
-            }
-            reszleg.setAlkalmazottak(alkalmazottak);
+    public ComplexResult<Reszleg> add(@RequestBody ReszlegView request) {
+        ComplexResult<Reszleg> result = reszlegControllerHelper.ReszlegValidate(request);
+        if(result.Status==HttpStatus.OK){
+            reszlegRepo.save(result.Object);
         }
-        if (reszleg != null && reszleg.getAutok() != null) {
-            reszleg.getAutok().forEach(x -> x.setReszleg(reszleg));
-        }
-        return reszlegRepo.save(reszleg);
+        return result;
     }
 
     @GetMapping()

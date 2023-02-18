@@ -1,6 +1,8 @@
 package org.pallas.alapozo.ViewModel;
 
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -8,12 +10,13 @@ import java.util.Date;
  * @author bardo
  */
 
+@Getter @Setter
 public class SmallAlkalmazottView {
-    public int id;
-    public int alkKod;
-    public String alkNev;
-    public String beosztas;
-    public Integer fizetes;
-    public Integer premium;
-    public Date belepes;
+    private int id;
+    private int alkKod;
+    private String alkNev;
+    private String beosztas;
+    private Integer fizetes;
+    private Integer premium;
+    private Date belepes;
 }

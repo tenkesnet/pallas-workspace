@@ -15,6 +15,6 @@ public class ReszlegView {
 	private int reszlegKod;
 	private String reszlegNev;
 	private String reszlegCim;
-	private List<SmallAlkalmazottView> alkalmazottak = new ArrayList<>();
-	private List<AutokView> autok = new ArrayList<>();
+	private List<SmallAlkalmazottView> alkalmazottak; // = new ArrayList<>();
+	private List<AutokView> autok; // = new ArrayList<>();
 }
