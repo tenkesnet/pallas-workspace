@@ -2,13 +2,11 @@ package org.pallas.alapozo.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
+import java.util.stream.Collectors;
 import org.pallas.alapozo.ViewModel.ReszlegView;
 import org.pallas.alapozo.abstraction.ComplexResult;
 import org.pallas.alapozo.helpers.ReszlegControllerHelper;
 import org.pallas.alapozo.mapper.ReszlegMapper;
-import org.pallas.alapozo.model.Alkalmazott;
 import org.pallas.alapozo.model.Reszleg;
 import org.pallas.alapozo.repository.IAlkalmazottRepository;
 import org.pallas.alapozo.repository.IReszlegRepository;
@@ -53,6 +51,10 @@ public class ReszlegController {
     public List<ReszlegView> getAllReszleg() {
         ComplexResult<Iterable<Reszleg>> result = _service.getAllReszleg();
         List<ReszlegView> reszlegs = ReszlegMapper.INSTANCE.reszlegToReszlegViews(result.Object);
+        reszlegs.stream().map( x ->  { 
+            x.setReszlegNev(x.getReszlegNev().toLowerCase());   
+            return x;    
+                    }).collect(Collectors.toList());
         return reszlegs;
     }
 

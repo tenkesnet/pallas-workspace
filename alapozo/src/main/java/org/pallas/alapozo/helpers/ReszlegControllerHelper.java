@@ -9,7 +9,6 @@ import org.pallas.alapozo.mapper.ReszlegMapper;
 import org.pallas.alapozo.model.Alkalmazott;
 import org.pallas.alapozo.model.Reszleg;
 import org.pallas.alapozo.repository.IAlkalmazottRepository;
-import org.pallas.alapozo.repository.IReszlegRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -26,11 +25,11 @@ public class ReszlegControllerHelper {
     
     public  ComplexResult<Reszleg> ReszlegValidate(ReszlegView reszlegView){
         Reszleg reszleg = ReszlegMapper.INSTANCE.reszlegViewToReszleg(reszlegView);
-        if(reszleg.getReszlegCim()==null || reszleg.getReszlegNev()==null ){
+        if(reszleg != null && (reszleg.getReszlegCim()==null || reszleg.getReszlegNev()==null)  ){
             return new ComplexResult<>(null,"Not enught data" , HttpStatus.BAD_REQUEST);
         }
         
-        if (reszleg != null && reszleg.getAlkalmazottak() != null) {
+        if (reszleg.getAlkalmazottak() != null) {
             List<Alkalmazott> alkalmazottak = new ArrayList<>();
             for (Alkalmazott x : reszleg.getAlkalmazottak()) {
                 if (x.id != 0) {
