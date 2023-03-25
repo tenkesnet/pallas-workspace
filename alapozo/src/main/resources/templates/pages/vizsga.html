@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         <ul th:each="kerdes: ${kerdesek}">
-            <p th:text="${kerdes.question}"></p>
+            <p th:text="${kerdes.question_number}+ '. '+ ${kerdes.question}"></p>
             <li th:each="valasz : ${kerdes.getAnswares()}">
                 <span th:text="${valasz.answare_number}+')'">)  </span>  <span th:text="${valasz.answare}"></span>
             </li>
