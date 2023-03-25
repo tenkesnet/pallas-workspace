@@ -2,7 +2,7 @@ drop table if exists public.question cascade;
 CREATE TABLE public.question (
 	id serial NOT null primary key,
 	question text NOT NULL,
-	answare text NOT null,
+	solution text NOT null,
 	question_number integer unique
 );
 GRANT UPDATE, TRIGGER, REFERENCES, DELETE, TRUNCATE, INSERT, SELECT ON TABLE public.question TO pallas;
@@ -18,5 +18,7 @@ create table answare (
 	  REFERENCES question(id)
 );
 
-select * from question q ;
+select count(*) from question q ;
 select count(*) from answare;
+
+select distinct(answare_number) from answare;

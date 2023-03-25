@@ -58,6 +58,8 @@ public class ImportKerdesek {
             }
             System.out.println(line);
             Matcher m_valaszSzam = p_valaszSzam.matcher(line);
+            Matcher m2 = p_megoldas.matcher(line);
+            boolean megoldasSor = m2.find();
             if (m_valaszSzam.find()) {
                 valaszSzam = m_valaszSzam.group(1);
                 valasz = line.replaceFirst("^[a-m]\\)[ ]*", "");
@@ -68,12 +70,12 @@ public class ImportKerdesek {
                 vizsgavalaszok.add(vizsgaValasz);
             } else if (!megoldasflag && !valaszflag) {
                 kerdes += System.lineSeparator() + line;
-            } else if (valaszflag) {
+            } else if (valaszflag && !megoldasSor ) {
                 valasz += line;
                 vizsgaValasz.setValasz(valasz);
             }
-            Matcher m2 = p_megoldas.matcher(line);
-            if (m2.find() && !megoldasflag && m2.group(0).length() > 0) {
+            
+            if (megoldasSor && !megoldasflag && m2.group(0).length() > 0) {
                 megoldasflag = true;
                 valaszflag = false;
                 megoldas = m2.group(1);
@@ -110,7 +112,7 @@ public class ImportKerdesek {
 
         //Set<VizsgaKerdes> y = vizsgakerdesek.stream().filter(x -> x.kerdesSzam % 4 == 0).collect(Collectors.toSet());
         for (var k : vizsgakerdesek) {
-            PreparedStatement stmt_question = c.prepareStatement("insert into question (question_number,question,answare) values(?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt_question = c.prepareStatement("insert into question (question_number,question,solution) values(?,?,?)",Statement.RETURN_GENERATED_KEYS);
 
             stmt_question.setInt(1, k.kerdesSzam);
             stmt_question.setString(2, k.kerdes);
