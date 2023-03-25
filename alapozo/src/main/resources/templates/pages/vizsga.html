@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            li {
+               list-style-type: none; 
+            }
+        </style>
+    </head>
+    <body>
+        <ul th:each="kerdes: ${kerdesek}">
+            <p th:text="${kerdes.question}"></p>
+            <li th:each="valasz : ${kerdes.getAnswares()}">
+                <span th:text="${valasz.answare_number}+')'">)  </span>  <span th:text="${valasz.answare}"></span>
+            </li>
+            <input type="text" th:name="${kerdes.question_number}+'question'">
+        </ul>
+    </body>
+</html>

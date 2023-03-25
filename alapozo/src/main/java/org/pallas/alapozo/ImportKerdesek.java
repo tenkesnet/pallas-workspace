@@ -132,7 +132,7 @@ public class ImportKerdesek {
                 }
             }
             for (var a : k.valaszok) {
-                PreparedStatement stmt_answare = c.prepareStatement("insert into answare (answare_number,answare,question_id) values(?,?,?)");
+                PreparedStatement stmt_answare = c.prepareStatement("insert into answare (answare_number,answare,fk_question_id) values(?,?,?)");
                 stmt_answare.setString(1,a.valaszSzam);
                 stmt_answare.setString(2, a.valasz);
                 stmt_answare.setInt(3, question_id);
