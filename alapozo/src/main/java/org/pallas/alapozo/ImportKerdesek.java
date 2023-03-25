@@ -5,6 +5,12 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +23,7 @@ public class ImportKerdesek {
 
     final String importedFile = "/home/bardo/repo/pallas/backend/example2/alapozo/src/main/resources/java_kerdesek.txt";
     public List<VizsgaKerdes> vizsgakerdesek;
+    private Connection c = null;
 
     public void readFile() {
         List<String> text = null;
@@ -59,12 +66,11 @@ public class ImportKerdesek {
                 vizsgaValasz.setValasz(valasz);
                 vizsgaValasz.setValaszSzam(valaszSzam);
                 vizsgavalaszok.add(vizsgaValasz);
-            } else if (!megoldasflag && !valaszflag){
-                kerdes += System.lineSeparator()+line;
-            } 
-            else if (valaszflag){
+            } else if (!megoldasflag && !valaszflag) {
+                kerdes += System.lineSeparator() + line;
+            } else if (valaszflag) {
                 valasz += line;
-                vizsgaValasz.setValaszSzam(valasz);
+                vizsgaValasz.setValasz(valasz);
             }
             Matcher m2 = p_megoldas.matcher(line);
             if (m2.find() && !megoldasflag && m2.group(0).length() > 0) {
@@ -81,24 +87,77 @@ public class ImportKerdesek {
                 System.out.println(String.join(",", m2.group(1).split("")) + "; groupcount:" + m2.groupCount());
             }
         }
-        System.out.println(vizsgakerdesek.get(110).kerdes);
+//        System.out.println(vizsgakerdesek.get(110).kerdes);
         System.out.println("");
     }
-    
-    public static void peldaStatic(ImportKerdesek ik){
-        System.out.println(ik.vizsgakerdesek.get(110).kerdes);
+
+    public static void peldaStatic(ImportKerdesek ik) {
+//        System.out.println(ik.vizsgakerdesek.get(110).kerdes);
     }
-     
-    
+
+    private void saveKerdesek() throws SQLException {
+        try {
+            Class.forName("org.postgresql.Driver");
+            c = DriverManager
+                    .getConnection("jdbc:postgresql://localhost:5432/pallas",
+                            "pallas", "Oktato123");
+            c.setAutoCommit(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        //Set<VizsgaKerdes> y = vizsgakerdesek.stream().filter(x -> x.kerdesSzam % 4 == 0).collect(Collectors.toSet());
+        for (var k : vizsgakerdesek) {
+            PreparedStatement stmt_question = c.prepareStatement("insert into question (question_number,question,answare) values(?,?,?)",Statement.RETURN_GENERATED_KEYS);
+
+            stmt_question.setInt(1, k.kerdesSzam);
+            stmt_question.setString(2, k.kerdes);
+            stmt_question.setString(3, k.megoldas);
+
+            int affectedQuestionRows = stmt_question.executeUpdate();
+            int question_id = 0;
+            if (affectedQuestionRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt_question.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    question_id = generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+            for (var a : k.valaszok) {
+                PreparedStatement stmt_answare = c.prepareStatement("insert into answare (answare_number,answare,question_id) values(?,?,?)");
+                stmt_answare.setString(1,a.valaszSzam);
+                stmt_answare.setString(2, a.valasz);
+                stmt_answare.setInt(3, question_id);
+                int affectedRows = stmt_answare.executeUpdate();
+                if (affectedRows ==0 ) {
+                    throw new SQLException("Creating user failed, no rows affected.");
+                }
+            }
+            c.commit();
+            
+
+            System.out.println(String.format("Kérdésszám:%d ; Megoldás:%s", k.kerdesSzam, k.megoldas));
+        }
+        c.close();
+    }
+
     public static void main(String[] args) {
         ImportKerdesek importkerdesek = new ImportKerdesek();
         importkerdesek.readFile();
         ImportKerdesek.peldaStatic(importkerdesek);
         System.out.println("");
-        
-        Set<VizsgaKerdes> y=importkerdesek.vizsgakerdesek.stream().filter(x->x.kerdesSzam%4==0).collect(Collectors.toSet());
-        for( var k: y){
-            System.out.println(String.format("Kérdésszám:%d ; Megoldás:%s",k.kerdesSzam,k.megoldas));
+        try {
+            importkerdesek.saveKerdesek();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
+        
+
     }
 }
