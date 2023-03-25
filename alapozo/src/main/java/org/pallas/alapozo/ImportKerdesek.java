@@ -1,12 +1,17 @@
 package org.pallas.alapozo;
 
+import ch.qos.logback.core.CoreConstants;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class ImportKerdesek {
 
@@ -21,8 +26,8 @@ public class ImportKerdesek {
             System.out.println(e.getMessage());
             return;
         }
-        Pattern p_kerdesszam = Pattern.compile("^([0-9]*).");
-        Pattern p_megoldas = Pattern.compile("^(Megoldás:\\s*)([a-m]*)");
+        Pattern p_kerdesszam = Pattern.compile("^([0-9]*).(.*)");
+        Pattern p_megoldas = Pattern.compile("^Megoldás:\\s*([a-m]*)");
         Pattern p_valaszSzam = Pattern.compile("^([a-m])\\)");
         boolean megoldasflag = true;
         boolean valaszflag = false;
@@ -39,7 +44,7 @@ public class ImportKerdesek {
             if (megoldasflag && m_kerdesszam.find() && m_kerdesszam.group(0).length() > 0) {
                 megoldasflag = false;
                 kerdesSzam = Integer.parseInt(m_kerdesszam.group(1));
-                kerdes = m_kerdesszam.group(2);
+                kerdes = m_kerdesszam.group(2).trim();
                 vizsgaValasz = new VizsgaValasz();
                 System.out.println(line);
                 continue;
@@ -54,13 +59,17 @@ public class ImportKerdesek {
                 vizsgaValasz.setValasz(valasz);
                 vizsgaValasz.setValaszSzam(valaszSzam);
                 vizsgavalaszok.add(vizsgaValasz);
-            } else {
+            } else if (!megoldasflag && !valaszflag){
+                kerdes += System.lineSeparator()+line;
+            } 
+            else if (valaszflag){
                 valasz += line;
                 vizsgaValasz.setValaszSzam(valasz);
             }
             Matcher m2 = p_megoldas.matcher(line);
             if (m2.find() && !megoldasflag && m2.group(0).length() > 0) {
                 megoldasflag = true;
+                valaszflag = false;
                 megoldas = m2.group(1);
                 VizsgaKerdes vizsgaKerdes = new VizsgaKerdes(kerdesSzam, kerdes);
                 for (VizsgaValasz v : vizsgavalaszok) {
@@ -69,14 +78,27 @@ public class ImportKerdesek {
                 vizsgaKerdes.setMegoldas(megoldas);
                 vizsgakerdesek.add(vizsgaKerdes);
                 vizsgavalaszok = new ArrayList<>();
-                System.out.println(String.join(",", m2.group(2).split("")) + "; groupcount:" + m2.groupCount());
+                System.out.println(String.join(",", m2.group(1).split("")) + "; groupcount:" + m2.groupCount());
             }
         }
+        System.out.println(vizsgakerdesek.get(110).kerdes);
+        System.out.println("");
     }
-
+    
+    public static void peldaStatic(ImportKerdesek ik){
+        System.out.println(ik.vizsgakerdesek.get(110).kerdes);
+    }
+     
+    
     public static void main(String[] args) {
         ImportKerdesek importkerdesek = new ImportKerdesek();
         importkerdesek.readFile();
+        ImportKerdesek.peldaStatic(importkerdesek);
         System.out.println("");
+        
+        Set<VizsgaKerdes> y=importkerdesek.vizsgakerdesek.stream().filter(x->x.kerdesSzam%4==0).collect(Collectors.toSet());
+        for( var k: y){
+            System.out.println(String.format("Kérdésszám:%d ; Megoldás:%s",k.kerdesSzam,k.megoldas));
+        }
     }
 }
