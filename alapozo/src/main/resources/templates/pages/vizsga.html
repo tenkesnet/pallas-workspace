@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -11,16 +6,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <style>
             li {
                list-style-type: none; 
+               padding-left: 1rem;
+            }
+            ul div {
+                margin-bottom: 1rem;
+                font-weight: bold;
+            }
+            .kerdesek {
+                padding-left: 3rem;
+                padding-bottom: 2rem;
+            }
+            .valasz {
+                padding-left: 3rem;
+            }
+            .good {
+                color: green;
+            }
+            .wrong {
+                color: red;
             }
         </style>
     </head>
     <body>
-        <ul th:each="kerdes: ${kerdesek}">
-            <p th:text="${kerdes.question_number}+ '. '+ ${kerdes.question}"></p>
-            <li th:each="valasz : ${kerdes.getAnswares()}">
-                <span th:text="${valasz.answare_number}+')'">)  </span>  <span th:text="${valasz.answare}"></span>
-            </li>
-            <input type="text" th:name="${kerdes.question_number}+'question'">
-        </ul>
+        <div id="vizsgakerdesek" class="kerdesek"></div>
+        <script src="vizsga.js"></script>
     </body>
 </html>

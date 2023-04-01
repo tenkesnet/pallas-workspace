@@ -8,6 +8,7 @@ class AlapozoApplicationTests {
 
 	@Test
 	void contextLoads() {
+            
 	}
 
 }
